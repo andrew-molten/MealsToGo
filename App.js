@@ -15,8 +15,8 @@ import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-// import { restaurantsRequest } from "./src/components/services/restaurants/restaurants.service";
+import { RestaurantsContextProvider } from "./src/components/services/restaurants/restaurants.context";
+import { LocationContextProvider } from "./src/components/services/location/location.context";
 
 // function RestaurantsScreen() {
 //   return (
@@ -71,25 +71,29 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Tab.Navigator screenOptions={CreateScreenOptions}>
-            <Tab.Screen
-              name="Restaurants"
-              component={RestaurantsScreen}
-              options={{ headerShown: false }}
-            />
-            <Tab.Screen
-              name="Map"
-              component={MapScreen}
-              options={{ headerShown: false }}
-            />
-            <Tab.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{ headerShown: false }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
+        <LocationContextProvider>
+          <RestaurantsContextProvider>
+            <NavigationContainer>
+              <Tab.Navigator screenOptions={CreateScreenOptions}>
+                <Tab.Screen
+                  name="Restaurants"
+                  component={RestaurantsScreen}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Map"
+                  component={MapScreen}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Settings"
+                  component={SettingsScreen}
+                  options={{ headerShown: false }}
+                />
+              </Tab.Navigator>
+            </NavigationContainer>
+          </RestaurantsContextProvider>
+        </LocationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
